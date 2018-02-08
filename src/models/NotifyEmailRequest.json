@@ -1,0 +1,30 @@
+{
+	"type": "object",
+	"required": [
+		"Email", "VehicleReg", "Location", "Amount", "Token"
+	],
+	"properties": {
+		"Email": {
+			"type": "string"
+		},
+		"VehicleReg": {
+			"type": "string"
+		},
+		"Location": {
+			"type": "string"
+		},
+		"Amount": {
+			"type": "integer"
+		},
+		"Token": {
+			"type": "string"
+		}
+	},
+	"example": {
+		"Email": "example@example.com",
+		"VehicleReg": "AB12CDE",
+		"Location": "United Kingdom",
+		"Amount": 100,
+		"Token": "ABCDEFGHIJKLMNOP"
+	}
+}

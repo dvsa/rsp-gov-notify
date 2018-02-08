@@ -1,0 +1,30 @@
+{
+	"type": "object",
+	"required": [
+		"PhoneNumber", "VehicleReg", "Location", "Amount", "Token"
+	],
+	"properties": {
+		"PhoneNumber": {
+			"type": "string"
+		},
+		"VehicleReg": {
+			"type": "string"
+		},
+		"Location": {
+			"type": "string"
+		},
+		"Amount": {
+			"type": "integer"
+		},
+		"Token": {
+			"type": "string"
+		}
+	},
+	"example": {
+		"PhoneNumber": "07000000000",
+		"VehicleReg": "AB12CDE",
+		"Location": "United Kingdom",
+		"Amount": 100,
+		"Token": "ABCDEFGHIJKLMNOP"
+	}
+}
