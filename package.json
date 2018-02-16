@@ -8,7 +8,7 @@
   "scripts": {
     "start": "rm -rf build && npm run copy-localfiles && npm run parallel",
     "presetup": "npm run copy-localfiles",
-    "copy-localfiles": "npm run copy-sls && npm run copy-mockdata && npm run copy-models",
+    "copy-localfiles": "npm run copy-sls && npm run copy-mockdata && npm run copy-models && npm run copy-openapi",
     "copy-sls": "./node_modules/.bin/copyfiles -f serverless/*.yml build",
     "copy-mockdata": "./node_modules/.bin/copyfiles mock-data/*.json build",
     "copy-models": "./node_modules/.bin/copyfiles -f src/models/*.json build/models",

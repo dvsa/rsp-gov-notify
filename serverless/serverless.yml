@@ -43,7 +43,7 @@ functions:
         http:
           path: notifyEmail
           method: post
-          authorizer: authorizer
+          authorizer: aws_iam
           cors: true
           documentation:
             summary: "Send Email notification"
@@ -76,7 +76,7 @@ functions:
         http:
           path: notifySms
           method: post
-          authorizer: authorizer
+          authorizer: aws_iam
           cors: true
           documentation:
             summary: "Send SMS notification"

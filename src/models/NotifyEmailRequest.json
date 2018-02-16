@@ -25,6 +25,6 @@
 		"VehicleReg": "AB12CDE",
 		"Location": "United Kingdom",
 		"Amount": 100,
-		"Token": "ABCDEFGHIJKLMNOP"
+		"Token": "0123456789abcdef"
 	}
 }

@@ -17,10 +17,16 @@ export default class Notify {
 			{
 				personalisation: Notify.formatPersonalisationObject(templateObj),
 			},
-		).then(callback(
-			null,
-			Notify.SuccessfulResponse(),
-		)).catch(error => callback(null, Notify.ErrorResponse(error)));
+		).then((response) => {
+			console.log(response);
+			callback(
+				null,
+				Notify.SuccessfulResponse(),
+			);
+		}).catch((error) => {
+			console.log(error);
+			callback(null, Notify.ErrorResponse(error));
+		});
 	}
 
 	static email(emailAddress, templateObj, callback) {
@@ -32,10 +38,16 @@ export default class Notify {
 			{
 				personalisation: Notify.formatPersonalisationObject(templateObj),
 			},
-		).then(callback(
-			null,
-			Notify.SuccessfulResponse(),
-		)).catch(error => callback(null, Notify.ErrorResponse(error)));
+		).then((response) => {
+			console.log(response);
+			callback(
+				null,
+				Notify.SuccessfulResponse(),
+			);
+		}).catch((error) => {
+			console.log(error);
+			callback(null, Notify.ErrorResponse(error));
+		});
 	}
 
 	static formatPersonalisationObject(templateObj) {
