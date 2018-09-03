@@ -56,6 +56,7 @@ export default class Notify {
 			Location: templateObj.Location,
 			Amount: templateObj.Amount,
 			Hyperlink: `${paymentPortalUrl}/${templateObj.Token}`,
+			Payment_code: templateObj.Token,
 		};
 	}
 
