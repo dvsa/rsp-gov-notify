@@ -1,9 +1,8 @@
 import { NotifyClient } from 'notifications-node-client';
 import CreateResponse from '../utils/createResponse';
+import TemplateKeySelector from '../utils/TemplateKeySelector';
 
 const notifyApiKey = process.env.NOTIFY_API_KEY;
-const smsTemplateKey = process.env.SMS_TEMPLATE_KEY;
-const emailTemplateKey = process.env.EMAIL_TEMPLATE_KEY;
 const paymentPortalUrl = process.env.PAYMENT_PORTAL_URL;
 
 export default class Notify {
@@ -11,8 +10,11 @@ export default class Notify {
 	static sms(phoneNumber, templateObj, callback) {
 		const notifyClient = new NotifyClient(notifyApiKey);
 
+		const templateKeySelector = new TemplateKeySelector();
+		const templateKey = templateKeySelector.keyForEmail(templateObj.Language);
+
 		notifyClient.sendSms(
-			smsTemplateKey,
+			templateKey,
 			phoneNumber,
 			{
 				personalisation: Notify.formatPersonalisationObject(templateObj),
@@ -32,8 +34,11 @@ export default class Notify {
 	static email(emailAddress, templateObj, callback) {
 		const notifyClient = new NotifyClient(notifyApiKey);
 
+		const templateKeySelector = new TemplateKeySelector();
+		const templateKey = templateKeySelector.keyForEmail(templateObj.Language);
+		
 		notifyClient.sendEmail(
-			emailTemplateKey,
+			templateKey,
 			emailAddress,
 			{
 				personalisation: Notify.formatPersonalisationObject(templateObj),
