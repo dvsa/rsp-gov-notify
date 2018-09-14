@@ -2,12 +2,11 @@ import { NotifyClient } from 'notifications-node-client';
 import CreateResponse from '../utils/createResponse';
 import TemplateKeySelector from '../utils/TemplateKeySelector';
 
-const notifyApiKey = process.env.NOTIFY_API_KEY;
-const paymentPortalUrl = process.env.PAYMENT_PORTAL_URL;
 
 export default class Notify {
 
 	static sms(phoneNumber, templateObj, callback) {
+		const notifyApiKey = process.env.NOTIFY_API_KEY;
 		const notifyClient = new NotifyClient(notifyApiKey);
 
 		const templateKeySelector = new TemplateKeySelector();
@@ -32,6 +31,7 @@ export default class Notify {
 	}
 
 	static email(emailAddress, templateObj, callback) {
+		const notifyApiKey = process.env.NOTIFY_API_KEY;
 		const notifyClient = new NotifyClient(notifyApiKey);
 
 		const templateKeySelector = new TemplateKeySelector();
@@ -56,6 +56,7 @@ export default class Notify {
 	}
 
 	static formatPersonalisationObject(templateObj) {
+		const paymentPortalUrl = process.env.PAYMENT_PORTAL_URL;
 		return {
 			'Plate No.': templateObj.VehicleReg,
 			Location: templateObj.Location,
