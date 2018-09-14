@@ -1,18 +1,19 @@
 import { NotifyClient } from 'notifications-node-client';
 import CreateResponse from '../utils/createResponse';
+import TemplateKeySelector from '../utils/TemplateKeySelector';
 
-const notifyApiKey = process.env.NOTIFY_API_KEY;
-const smsTemplateKey = process.env.SMS_TEMPLATE_KEY;
-const emailTemplateKey = process.env.EMAIL_TEMPLATE_KEY;
-const paymentPortalUrl = process.env.PAYMENT_PORTAL_URL;
 
 export default class Notify {
 
 	static sms(phoneNumber, templateObj, callback) {
+		const notifyApiKey = process.env.NOTIFY_API_KEY;
 		const notifyClient = new NotifyClient(notifyApiKey);
 
+		const templateKeySelector = new TemplateKeySelector();
+		const templateKey = templateKeySelector.keyForSms(templateObj.Language);
+
 		notifyClient.sendSms(
-			smsTemplateKey,
+			templateKey,
 			phoneNumber,
 			{
 				personalisation: Notify.formatPersonalisationObject(templateObj),
@@ -30,10 +31,14 @@ export default class Notify {
 	}
 
 	static email(emailAddress, templateObj, callback) {
+		const notifyApiKey = process.env.NOTIFY_API_KEY;
 		const notifyClient = new NotifyClient(notifyApiKey);
 
+		const templateKeySelector = new TemplateKeySelector();
+		const templateKey = templateKeySelector.keyForEmail(templateObj.Language);
+
 		notifyClient.sendEmail(
-			emailTemplateKey,
+			templateKey,
 			emailAddress,
 			{
 				personalisation: Notify.formatPersonalisationObject(templateObj),
@@ -51,11 +56,14 @@ export default class Notify {
 	}
 
 	static formatPersonalisationObject(templateObj) {
+		const paymentPortalUrl = process.env.PAYMENT_PORTAL_URL;
+		const langParam = templateObj.Language !== 'en' ? `?clang=${templateObj.Language}` : '';
+		const link = `${paymentPortalUrl}/${templateObj.Token}${langParam}`;
 		return {
 			'Plate No.': templateObj.VehicleReg,
 			Location: templateObj.Location,
 			Amount: templateObj.Amount,
-			Hyperlink: `${paymentPortalUrl}/${templateObj.Token}`,
+			Hyperlink: link,
 			Payment_code: templateObj.Token,
 		};
 	}
