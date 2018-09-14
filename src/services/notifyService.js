@@ -57,11 +57,13 @@ export default class Notify {
 
 	static formatPersonalisationObject(templateObj) {
 		const paymentPortalUrl = process.env.PAYMENT_PORTAL_URL;
+		const langParam = templateObj.Language !== 'en' ? `?clang=${templateObj.Language}` : '';
+		const link = `${paymentPortalUrl}/${templateObj.Token}${langParam}`;
 		return {
 			'Plate No.': templateObj.VehicleReg,
 			Location: templateObj.Location,
 			Amount: templateObj.Amount,
-			Hyperlink: `${paymentPortalUrl}/${templateObj.Token}`,
+			Hyperlink: link,
 			Payment_code: templateObj.Token,
 		};
 	}
