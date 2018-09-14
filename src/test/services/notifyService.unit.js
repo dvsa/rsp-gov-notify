@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import expect from 'expect';
 import sinon from 'sinon';
 import { NotifyClient } from 'notifications-node-client';
@@ -9,6 +10,7 @@ describe('notifyService', () => {
 	context('notifyEmail', () => {
 		let sendEmailStub;
 		let templateKeySelectorStub;
+		let personalisation;
 
 		const emailAddr = 'joe.bloggs@example.com';
 		const payload = {
@@ -19,17 +21,9 @@ describe('notifyService', () => {
 			Language: 'en',
 			VehicleReg: 'AA123',
 		};
-		const expPersonalisation = {
-			personalisation: {
-				'Plate No.': 'AA123',
-				Location: 'Somewhere',
-				Amount: 180,
-				Hyperlink: 'https://portal.local/47bmo7p9syg',
-				Payment_code: '47bmo7p9syg',
-			},
-		};
 
 		beforeEach(() => {
+			personalisation = personalisationWithLink('https://portal.local/47bmo7p9syg');
 			sendEmailStub = sinon.stub(NotifyClient.prototype, 'sendEmail');
 			templateKeySelectorStub = sinon.stub(TemplateKeySelector.prototype, 'keyForEmail');
 			process.env.PAYMENT_PORTAL_URL = 'https://portal.local';
@@ -47,12 +41,12 @@ describe('notifyService', () => {
 					.withArgs('en')
 					.returns('ENGLISH_EMAIL_TEMPLATE_KEY');
 				sendEmailStub
-					.withArgs('ENGLISH_EMAIL_TEMPLATE_KEY', emailAddr, expPersonalisation)
+					.withArgs('ENGLISH_EMAIL_TEMPLATE_KEY', emailAddr, personalisation)
 					.resolves('notify client success');
 			});
 			it('should call the notify client correctly then call back', (done) => {
 				NotifyService.email(emailAddr, payload, (callbackErr, callbackResp) => {
-					sinon.assert.calledWith(sendEmailStub, 'ENGLISH_EMAIL_TEMPLATE_KEY', emailAddr, expPersonalisation);
+					sinon.assert.calledWith(sendEmailStub, 'ENGLISH_EMAIL_TEMPLATE_KEY', emailAddr, personalisation);
 					expect(callbackErr).toBeNull();
 					expect(callbackResp).toMatchObject({ statusCode: 200 });
 					done();
@@ -60,26 +54,10 @@ describe('notifyService', () => {
 			});
 		});
 	});
+
 	context('notifySms', () => {
 		let sendSmsStub;
 		let templateKeySelectorStub;
-		const payload = {
-			Token: '47bmo7p9syg',
-			PhoneNumber: '12345',
-			Location: 'Somewhere',
-			Amount: 180,
-			Language: 'en',
-			VehicleReg: 'AA123',
-		};
-		const expPersonalisation = {
-			personalisation: {
-				'Plate No.': 'AA123',
-				Location: 'Somewhere',
-				Amount: 180,
-				Hyperlink: 'https://portal.local/47bmo7p9syg',
-				Payment_code: '47bmo7p9syg',
-			},
-		};
 
 		beforeEach(() => {
 			sendSmsStub = sinon.stub(NotifyClient.prototype, 'sendSms');
@@ -93,18 +71,43 @@ describe('notifyService', () => {
 			TemplateKeySelector.prototype.keyForSms.restore();
 		});
 
-		context('when called with email, full payload for English language and callback', () => {
+		context('when called with phone number, full payload for English language and callback', () => {
+			let personalisation;
+
 			beforeEach(() => {
+				personalisation = personalisationWithLink('https://portal.local/47bmo7p9syg');
 				templateKeySelectorStub
 					.withArgs('en')
 					.returns('ENGLISH_SMS_TEMPLATE_KEY');
 				sendSmsStub
-					.withArgs('ENGLISH_SMS_TEMPLATE_KEY', '12345', expPersonalisation)
+					.withArgs('ENGLISH_SMS_TEMPLATE_KEY', '12345', personalisation)
 					.resolves('notify client success');
 			});
 			it('should call the notify client correctly then call back', (done) => {
-				NotifyService.sms('12345', payload, (callbackErr, callbackResp) => {
-					sinon.assert.calledWith(sendSmsStub, 'ENGLISH_SMS_TEMPLATE_KEY', '12345', expPersonalisation);
+				NotifyService.sms('12345', smsPayloadForLanguage('en'), (callbackErr, callbackResp) => {
+					sinon.assert.calledWith(sendSmsStub, 'ENGLISH_SMS_TEMPLATE_KEY', '12345', personalisation);
+					expect(callbackErr).toBeNull();
+					expect(callbackResp).toMatchObject({ statusCode: 200 });
+					done();
+				});
+			});
+		});
+
+		context('when called with phone number, full payload for French language and callback', () => {
+			let personalisation;
+			beforeEach(() => {
+				personalisation = personalisationWithLink('https://portal.local/47bmo7p9syg?clang=fr');
+				templateKeySelectorStub
+					.withArgs('fr')
+					.returns('FRENCH_SMS_TEMPLATE_KEY');
+
+				sendSmsStub
+					.withArgs('FRENCH_SMS_TEMPLATE_KEY', '12345', personalisation)
+					.resolves('notify client success');
+			});
+			it('should call the notify client correctly then call back', (done) => {
+				NotifyService.sms('12345', smsPayloadForLanguage('fr'), (callbackErr, callbackResp) => {
+					sinon.assert.calledWith(sendSmsStub, 'FRENCH_SMS_TEMPLATE_KEY', '12345', personalisation);
 					expect(callbackErr).toBeNull();
 					expect(callbackResp).toMatchObject({ statusCode: 200 });
 					done();
@@ -113,3 +116,26 @@ describe('notifyService', () => {
 		});
 	});
 });
+
+const smsPayloadForLanguage = (lang) => {
+	return {
+		Token: '47bmo7p9syg',
+		PhoneNumber: '12345',
+		Location: 'Somewhere',
+		Amount: 180,
+		Language: lang,
+		VehicleReg: 'AA123',
+	};
+};
+
+const personalisationWithLink = (link) => {
+	return {
+		personalisation: {
+			'Plate No.': 'AA123',
+			Location: 'Somewhere',
+			Amount: 180,
+			Hyperlink: link,
+			Payment_code: '47bmo7p9syg',
+		},
+	};
+};
