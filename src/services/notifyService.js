@@ -36,7 +36,7 @@ export default class Notify {
 
 		const templateKeySelector = new TemplateKeySelector();
 		const templateKey = templateKeySelector.keyForEmail(templateObj.Language);
-		
+
 		notifyClient.sendEmail(
 			templateKey,
 			emailAddress,
