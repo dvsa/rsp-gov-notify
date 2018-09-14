@@ -60,4 +60,56 @@ describe('notifyService', () => {
 			});
 		});
 	});
+	context('notifySms', () => {
+		let sendSmsStub;
+		let templateKeySelectorStub;
+		const payload = {
+			Token: '47bmo7p9syg',
+			PhoneNumber: '12345',
+			Location: 'Somewhere',
+			Amount: 180,
+			Language: 'en',
+			VehicleReg: 'AA123',
+		};
+		const expPersonalisation = {
+			personalisation: {
+				'Plate No.': 'AA123',
+				Location: 'Somewhere',
+				Amount: 180,
+				Hyperlink: 'https://portal.local/47bmo7p9syg',
+				Payment_code: '47bmo7p9syg',
+			},
+		};
+
+		beforeEach(() => {
+			sendSmsStub = sinon.stub(NotifyClient.prototype, 'sendSms');
+			templateKeySelectorStub = sinon.stub(TemplateKeySelector.prototype, 'keyForSms');
+			process.env.PAYMENT_PORTAL_URL = 'https://portal.local';
+			process.env.NOTIFY_API_KEY = 'NOTIFY_API_KEY';
+		});
+
+		afterEach(() => {
+			NotifyClient.prototype.sendSms.restore();
+			TemplateKeySelector.prototype.keyForSms.restore();
+		});
+
+		context('when called with email, full payload for English language and callback', () => {
+			beforeEach(() => {
+				templateKeySelectorStub
+					.withArgs('en')
+					.returns('ENGLISH_SMS_TEMPLATE_KEY');
+				sendSmsStub
+					.withArgs('ENGLISH_SMS_TEMPLATE_KEY', '12345', expPersonalisation)
+					.resolves('notify client success');
+			});
+			it('should call the notify client correctly then call back', (done) => {
+				NotifyService.sms('12345', payload, (callbackErr, callbackResp) => {
+					sinon.assert.calledWith(sendSmsStub, 'ENGLISH_SMS_TEMPLATE_KEY', '12345', expPersonalisation);
+					expect(callbackErr).toBeNull();
+					expect(callbackResp).toMatchObject({ statusCode: 200 });
+					done();
+				});
+			});
+		});	
+	});
 });

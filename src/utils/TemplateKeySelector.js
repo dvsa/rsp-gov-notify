@@ -3,4 +3,8 @@ export default class TemplateKeySelector {
 		this.email = email;
 		return email;
 	}
+	keyForSms(number) {
+		this.number = number;
+		return number;
+	}
 }

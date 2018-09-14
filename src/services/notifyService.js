@@ -11,7 +11,7 @@ export default class Notify {
 		const notifyClient = new NotifyClient(notifyApiKey);
 
 		const templateKeySelector = new TemplateKeySelector();
-		const templateKey = templateKeySelector.keyForEmail(templateObj.Language);
+		const templateKey = templateKeySelector.keyForSms(templateObj.Language);
 
 		notifyClient.sendSms(
 			templateKey,
