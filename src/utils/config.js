@@ -50,5 +50,5 @@ const fromConfiguration = configKey => () => {
 export default Object.keys(configMetadata)
 	.reduce(
 		(obj, metaKey) => ({ [metaKey]: fromConfiguration(configMetadata[metaKey]), ...obj }),
-		{},
+		{ bootstrap },
 	);
