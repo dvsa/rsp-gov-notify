@@ -2,7 +2,6 @@ import { NotifyClient } from 'notifications-node-client';
 import CreateResponse from '../utils/createResponse';
 import TemplateKeySelector from '../utils/TemplateKeySelector';
 
-
 export default class Notify {
 
 	static sms(phoneNumber, templateObj, callback) {
