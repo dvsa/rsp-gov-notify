@@ -3,6 +3,7 @@ import expect from 'expect';
 import sinon from 'sinon';
 import { NotifyClient } from 'notifications-node-client';
 
+import config from '../../utils/config';
 import NotifyService from '../../services/notifyService';
 import TemplateKeySelector from '../../utils/TemplateKeySelector';
 
@@ -26,13 +27,15 @@ describe('notifyService', () => {
 			personalisation = personalisationWithLink('https://portal.local/47bmo7p9syg');
 			sendEmailStub = sinon.stub(NotifyClient.prototype, 'sendEmail');
 			templateKeySelectorStub = sinon.stub(TemplateKeySelector.prototype, 'keyForEmail');
-			process.env.PAYMENT_PORTAL_URL = 'https://portal.local';
-			process.env.NOTIFY_API_KEY = 'NOTIFY_API_KEY';
+			sinon.stub(config, 'paymentPortalUrl').returns('https://portal.local');
+			sinon.stub(config, 'notifyApiKey').returns('NOTIFY_API_KEY');
 		});
 
 		afterEach(() => {
 			NotifyClient.prototype.sendEmail.restore();
 			TemplateKeySelector.prototype.keyForEmail.restore();
+			config.paymentPortalUrl.restore();
+			config.notifyApiKey.restore();
 		});
 
 		context('when called with email, full payload for English language and callback', () => {
@@ -62,13 +65,15 @@ describe('notifyService', () => {
 		beforeEach(() => {
 			sendSmsStub = sinon.stub(NotifyClient.prototype, 'sendSms');
 			templateKeySelectorStub = sinon.stub(TemplateKeySelector.prototype, 'keyForSms');
-			process.env.PAYMENT_PORTAL_URL = 'https://portal.local';
-			process.env.NOTIFY_API_KEY = 'NOTIFY_API_KEY';
+			sinon.stub(config, 'paymentPortalUrl').returns('https://portal.local');
+			sinon.stub(config, 'notifyApiKey').returns('NOTIFY_API_KEY');
 		});
 
 		afterEach(() => {
 			NotifyClient.prototype.sendSms.restore();
 			TemplateKeySelector.prototype.keyForSms.restore();
+			config.paymentPortalUrl.restore();
+			config.notifyApiKey.restore();
 		});
 
 		context('when called with phone number, full payload for English language and callback', () => {

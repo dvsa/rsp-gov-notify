@@ -1,20 +1,45 @@
+import 'babel-polyfill';
 import expect from 'expect';
+import sinon from 'sinon';
+import config from '../../utils/config';
 
 import TemplateKeySelector from '../../utils/TemplateKeySelector';
 
 describe('TemplateKeySelector', () => {
 	let templateKeySelector;
 
+	before(async () => {
+		sinon.stub(config, 'templateKeyEmailEnglish').returns('ENGLISH_EMAIL_KEY');
+		sinon.stub(config, 'templateKeyEmailFrench').returns('FRENCH_EMAIL_KEY');
+		sinon.stub(config, 'templateKeyEmailGerman').returns('GERMAN_EMAIL_KEY');
+		sinon.stub(config, 'templateKeyEmailPolish').returns('POLISH_EMAIL_KEY');
+		sinon.stub(config, 'templateKeyEmailSpanish').returns('SPANISH_EMAIL_KEY');
+		sinon.stub(config, 'templateKeyEmailWelsh').returns('WELSH_EMAIL_KEY');
+		sinon.stub(config, 'templateKeySmsEnglish').returns('ENGLISH_SMS_KEY');
+		sinon.stub(config, 'templateKeySmsFrench').returns('FRENCH_SMS_KEY');
+		sinon.stub(config, 'templateKeySmsGerman').returns('GERMAN_SMS_KEY');
+		sinon.stub(config, 'templateKeySmsPolish').returns('POLISH_SMS_KEY');
+		sinon.stub(config, 'templateKeySmsSpanish').returns('SPANISH_SMS_KEY');
+		sinon.stub(config, 'templateKeySmsWelsh').returns('WELSH_SMS_KEY');
+		templateKeySelector = new TemplateKeySelector();
+	});
+
+	after(() => {
+		config.templateKeyEmailEnglish.restore();
+		config.templateKeyEmailFrench.restore();
+		config.templateKeyEmailGerman.restore();
+		config.templateKeyEmailPolish.restore();
+		config.templateKeyEmailSpanish.restore();
+		config.templateKeyEmailWelsh.restore();
+		config.templateKeySmsEnglish.restore();
+		config.templateKeySmsFrench.restore();
+		config.templateKeySmsGerman.restore();
+		config.templateKeySmsPolish.restore();
+		config.templateKeySmsSpanish.restore();
+		config.templateKeySmsWelsh.restore();
+	});
+
 	context('keyForEmail', () => {
-		beforeEach(() => {
-			process.env.TEMPLATE_KEY_EMAIL_ENGLISH = 'ENGLISH_EMAIL_KEY';
-			process.env.TEMPLATE_KEY_EMAIL_FRENCH = 'FRENCH_EMAIL_KEY';
-			process.env.TEMPLATE_KEY_EMAIL_GERMAN = 'GERMAN_EMAIL_KEY';
-			process.env.TEMPLATE_KEY_EMAIL_POLISH = 'POLISH_EMAIL_KEY';
-			process.env.TEMPLATE_KEY_EMAIL_SPANISH = 'SPANISH_EMAIL_KEY';
-			process.env.TEMPLATE_KEY_EMAIL_WELSH = 'WELSH_EMAIL_KEY';
-			templateKeySelector = new TemplateKeySelector();
-		});
 		it('should return the email envvars for the provided language', () => {
 			expect(templateKeySelector.keyForEmail('en')).toEqual('ENGLISH_EMAIL_KEY');
 			expect(templateKeySelector.keyForEmail('fr')).toEqual('FRENCH_EMAIL_KEY');
@@ -26,15 +51,6 @@ describe('TemplateKeySelector', () => {
 	});
 
 	context('keyForSms', () => {
-		beforeEach(() => {
-			process.env.TEMPLATE_KEY_SMS_ENGLISH = 'ENGLISH_SMS_KEY';
-			process.env.TEMPLATE_KEY_SMS_FRENCH = 'FRENCH_SMS_KEY';
-			process.env.TEMPLATE_KEY_SMS_GERMAN = 'GERMAN_SMS_KEY';
-			process.env.TEMPLATE_KEY_SMS_POLISH = 'POLISH_SMS_KEY';
-			process.env.TEMPLATE_KEY_SMS_SPANISH = 'SPANISH_SMS_KEY';
-			process.env.TEMPLATE_KEY_SMS_WELSH = 'WELSH_SMS_KEY';
-			templateKeySelector = new TemplateKeySelector();
-		});
 		it('should return the sms envvars for the provided language', () => {
 			expect(templateKeySelector.keyForSms('en')).toEqual('ENGLISH_SMS_KEY');
 			expect(templateKeySelector.keyForSms('fr')).toEqual('FRENCH_SMS_KEY');

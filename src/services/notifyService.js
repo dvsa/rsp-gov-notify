@@ -1,12 +1,12 @@
 import { NotifyClient } from 'notifications-node-client';
+import config from '../utils/config';
 import CreateResponse from '../utils/createResponse';
 import TemplateKeySelector from '../utils/TemplateKeySelector';
-
 
 export default class Notify {
 
 	static sms(phoneNumber, templateObj, callback) {
-		const notifyApiKey = process.env.NOTIFY_API_KEY;
+		const notifyApiKey = config.notifyApiKey();
 		const notifyClient = new NotifyClient(notifyApiKey);
 
 		const templateKeySelector = new TemplateKeySelector();
@@ -31,7 +31,7 @@ export default class Notify {
 	}
 
 	static email(emailAddress, templateObj, callback) {
-		const notifyApiKey = process.env.NOTIFY_API_KEY;
+		const notifyApiKey = config.notifyApiKey();
 		const notifyClient = new NotifyClient(notifyApiKey);
 
 		const templateKeySelector = new TemplateKeySelector();
@@ -56,7 +56,7 @@ export default class Notify {
 	}
 
 	static formatPersonalisationObject(templateObj) {
-		const paymentPortalUrl = process.env.PAYMENT_PORTAL_URL;
+		const paymentPortalUrl = config.paymentPortalUrl();
 		const langParam = templateObj.Language !== 'en' ? `?clang=${templateObj.Language}` : '';
 		const link = `${paymentPortalUrl}/${templateObj.Token}${langParam}`;
 		return {
