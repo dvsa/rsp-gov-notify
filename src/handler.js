@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import config from './utils/config';
 import notifyEmail from './functions/notifyEmail';
 import notifySms from './functions/notifySms';
