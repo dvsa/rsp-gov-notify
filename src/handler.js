@@ -5,12 +5,12 @@ import notifySms from './functions/notifySms';
 
 let configured = false;
 const configure = (lambdaFn) => {
-	return async (event, context, callback) => {
+	return async (event, context) => {
 		if (!configured) {
 			await config.bootstrap();
 			configured = true;
 		}
-		lambdaFn(event, context, callback);
+		return lambdaFn(event, context);
 	};
 };
 

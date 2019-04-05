@@ -5,54 +5,49 @@ import TemplateKeySelector from '../utils/TemplateKeySelector';
 
 export default class Notify {
 
-	static sms(phoneNumber, templateObj, callback) {
+	static async sms(phoneNumber, templateObj) {
 		const notifyApiKey = config.notifyApiKey();
 		const notifyClient = new NotifyClient(notifyApiKey);
 
 		const templateKeySelector = new TemplateKeySelector();
 		const templateKey = templateKeySelector.keyForSms(templateObj.Language);
 
-		notifyClient.sendSms(
-			templateKey,
-			phoneNumber,
-			{
-				personalisation: Notify.formatPersonalisationObject(templateObj),
-			},
-		).then((response) => {
-			console.log(response);
-			callback(
-				null,
-				Notify.SuccessfulResponse(),
+		try {
+			const response = await notifyClient.sendSms(
+				templateKey,
+				phoneNumber,
+				{
+					personalisation: Notify.formatPersonalisationObject(templateObj),
+				},
 			);
-		}).catch((error) => {
-			console.log(error);
-			callback(null, Notify.ErrorResponse(error));
-		});
+			console.log(response);
+			return Notify.SuccessfulResponse();
+		} catch (error) {
+			return Notify.ErrorResponse(error);
+		}
 	}
 
-	static email(emailAddress, templateObj, callback) {
+	static async email(emailAddress, templateObj) {
 		const notifyApiKey = config.notifyApiKey();
 		const notifyClient = new NotifyClient(notifyApiKey);
 
 		const templateKeySelector = new TemplateKeySelector();
 		const templateKey = templateKeySelector.keyForEmail(templateObj.Language);
 
-		notifyClient.sendEmail(
-			templateKey,
-			emailAddress,
-			{
-				personalisation: Notify.formatPersonalisationObject(templateObj),
-			},
-		).then((response) => {
-			console.log(response);
-			callback(
-				null,
-				Notify.SuccessfulResponse(),
+		try {
+			const response = notifyClient.sendEmail(
+				templateKey,
+				emailAddress,
+				{
+					personalisation: Notify.formatPersonalisationObject(templateObj),
+				},
 			);
-		}).catch((error) => {
+			console.log(response);
+			return Notify.SuccessfulResponse();
+		} catch (error) {
 			console.log(error);
-			callback(null, Notify.ErrorResponse(error));
-		});
+			return Notify.ErrorResponse(error);
+		}
 	}
 
 	static formatPersonalisationObject(templateObj) {
