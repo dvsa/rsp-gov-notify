@@ -14,9 +14,10 @@ const configure = (lambdaFn) => {
 	};
 };
 
-const handler = {
-	notifyEmail: configure(notifyEmail),
-	notifySms: configure(notifySms),
-};
+const configuredNotifyEmail = configure(notifyEmail);
+const configuredNotifySms = configure(notifySms);
 
-export default handler;
+export {
+	configuredNotifyEmail as notifyEmail,
+	configuredNotifySms as notifySms,
+};
