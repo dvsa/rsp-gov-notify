@@ -1,7 +1,7 @@
 import Notify from '../services/notifyService';
 
-export default (event, context, callback) => {
+export default (event) => {
 	const notifyObject = JSON.parse(event.body);
 
-	Notify.email(notifyObject.Email, notifyObject, callback);
+	return Notify.email(notifyObject.Email, notifyObject);
 };
