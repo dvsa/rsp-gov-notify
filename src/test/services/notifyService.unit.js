@@ -38,7 +38,7 @@ describe('notifyService', () => {
 			config.notifyApiKey.restore();
 		});
 
-		context('when called with email, full payload for English language and callback', () => {
+		context('when called with email, full payload for English language and respond', () => {
 			beforeEach(() => {
 				templateKeySelectorStub
 					.withArgs('en')
@@ -47,13 +47,10 @@ describe('notifyService', () => {
 					.withArgs('ENGLISH_EMAIL_TEMPLATE_KEY', emailAddr, personalisation)
 					.resolves('notify client success');
 			});
-			it('should call the notify client correctly then call back', (done) => {
-				NotifyService.email(emailAddr, payload, (callbackErr, callbackResp) => {
-					sinon.assert.calledWith(sendEmailStub, 'ENGLISH_EMAIL_TEMPLATE_KEY', emailAddr, personalisation);
-					expect(callbackErr).toBeNull();
-					expect(callbackResp).toMatchObject({ statusCode: 200 });
-					done();
-				});
+			it('should call the notify client correctly then respond', async () => {
+				const response = await NotifyService.email(emailAddr, payload);
+				sinon.assert.calledWith(sendEmailStub, 'ENGLISH_EMAIL_TEMPLATE_KEY', emailAddr, personalisation);
+				expect(response).toMatchObject({ statusCode: 200 });
 			});
 		});
 	});
@@ -76,7 +73,7 @@ describe('notifyService', () => {
 			config.notifyApiKey.restore();
 		});
 
-		context('when called with phone number, full payload for English language and callback', () => {
+		context('when called with phone number, full payload for English language and respond', () => {
 			let personalisation;
 
 			beforeEach(() => {
@@ -88,17 +85,14 @@ describe('notifyService', () => {
 					.withArgs('ENGLISH_SMS_TEMPLATE_KEY', '12345', personalisation)
 					.resolves('notify client success');
 			});
-			it('should call the notify client correctly then call back', (done) => {
-				NotifyService.sms('12345', smsPayloadForLanguage('en'), (callbackErr, callbackResp) => {
-					sinon.assert.calledWith(sendSmsStub, 'ENGLISH_SMS_TEMPLATE_KEY', '12345', personalisation);
-					expect(callbackErr).toBeNull();
-					expect(callbackResp).toMatchObject({ statusCode: 200 });
-					done();
-				});
+			it('should call the notify client correctly then respond', async () => {
+				const response = await NotifyService.sms('12345', smsPayloadForLanguage('en'));
+				sinon.assert.calledWith(sendSmsStub, 'ENGLISH_SMS_TEMPLATE_KEY', '12345', personalisation);
+				expect(response).toMatchObject({ statusCode: 200 });
 			});
 		});
 
-		context('when called with phone number, full payload for French language and callback', () => {
+		context('when called with phone number, full payload for French language and respond', () => {
 			let personalisation;
 			beforeEach(() => {
 				personalisation = personalisationWithLink('https://portal.local/47bmo7p9syg?clang=fr');
@@ -110,13 +104,10 @@ describe('notifyService', () => {
 					.withArgs('FRENCH_SMS_TEMPLATE_KEY', '12345', personalisation)
 					.resolves('notify client success');
 			});
-			it('should call the notify client correctly then call back', (done) => {
-				NotifyService.sms('12345', smsPayloadForLanguage('fr'), (callbackErr, callbackResp) => {
-					sinon.assert.calledWith(sendSmsStub, 'FRENCH_SMS_TEMPLATE_KEY', '12345', personalisation);
-					expect(callbackErr).toBeNull();
-					expect(callbackResp).toMatchObject({ statusCode: 200 });
-					done();
-				});
+			it('should call the notify client correctly then respond', async () => {
+				const response = await NotifyService.sms('12345', smsPayloadForLanguage('fr'));
+				sinon.assert.calledWith(sendSmsStub, 'FRENCH_SMS_TEMPLATE_KEY', '12345', personalisation);
+				expect(response).toMatchObject({ statusCode: 200 });
 			});
 		});
 	});
