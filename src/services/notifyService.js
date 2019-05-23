@@ -21,9 +21,14 @@ export default class Notify {
 					personalisation: Notify.formatPersonalisationObject(templateObj),
 				},
 			);
-			console.log(response);
+			logInfo('SendSmsSuccess', {
+				notifyMessageId: response.body.id,
+			});
 			return Notify.SuccessfulResponse();
 		} catch (error) {
+			logError('SendSmsError', {
+				notifyApiError: Notify.formatErrorObject(error)
+			});
 			return Notify.ErrorResponse(error);
 		}
 	}
