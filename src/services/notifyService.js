@@ -44,17 +44,8 @@ export default class Notify {
 				},
 			);
 
-			console.log(response.message);
-
-			const responseMessageContent = response.body.content;
-
-			console.log(responseMessageContent.from_email)
-			console.log(responseMessageContent.subject);
-			console.log(response.body.id);
-			console.log(response.body.template.id);
-
 			logInfo('SendEmailSuccess', {
-				emailBody: message.body,
+				notifyMessageId: response.body.id,
 			});
 			return Notify.SuccessfulResponse();
 		} catch (error) {
