@@ -2,6 +2,7 @@ import { NotifyClient } from 'notifications-node-client';
 import config from '../utils/config';
 import CreateResponse from '../utils/createResponse';
 import TemplateKeySelector from '../utils/TemplateKeySelector';
+import { logInfo } from '../utils/logger';
 
 export default class Notify {
 
@@ -42,7 +43,19 @@ export default class Notify {
 					personalisation: Notify.formatPersonalisationObject(templateObj),
 				},
 			);
-			console.log(response);
+
+			console.log(response.message);
+
+			const responseMessageContent = response.body.content;
+
+			console.log(responseMessageContent.from_email)
+			console.log(responseMessageContent.subject);
+			console.log(response.body.id);
+			console.log(response.body.template.id);
+
+			logInfo('SendEmailSuccess', {
+				emailBody: message.body,
+			});
 			return Notify.SuccessfulResponse();
 		} catch (error) {
 			console.log(error);
