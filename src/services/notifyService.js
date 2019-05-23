@@ -2,7 +2,7 @@ import { NotifyClient } from 'notifications-node-client';
 import config from '../utils/config';
 import CreateResponse from '../utils/createResponse';
 import TemplateKeySelector from '../utils/TemplateKeySelector';
-import { logInfo } from '../utils/logger';
+import { logInfo, logError } from '../utils/logger';
 
 export default class Notify {
 
@@ -49,6 +49,7 @@ export default class Notify {
 			});
 			return Notify.SuccessfulResponse();
 		} catch (error) {
+			logError('SendEmailError', Notify.formatErrorObject(error));
 			console.log(error);
 			return Notify.ErrorResponse(error);
 		}
