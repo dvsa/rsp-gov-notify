@@ -49,8 +49,9 @@ export default class Notify {
 			});
 			return Notify.SuccessfulResponse();
 		} catch (error) {
-			logError('SendEmailError', Notify.formatErrorObject(error));
-			console.log(error);
+			logError('SendEmailError', {
+				notifyApiError: Notify.formatErrorObject(error)
+			});
 			return Notify.ErrorResponse(error);
 		}
 	}
