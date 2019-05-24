@@ -45,7 +45,7 @@ describe('notifyService', () => {
 					.returns('ENGLISH_EMAIL_TEMPLATE_KEY');
 				sendEmailStub
 					.withArgs('ENGLISH_EMAIL_TEMPLATE_KEY', emailAddr, personalisation)
-					.resolves('notify client success');
+					.resolves({ body: { id: 'gov-notify-message-id' } });
 			});
 			it('should call the notify client correctly then respond', async () => {
 				const response = await NotifyService.email(emailAddr, payload);
@@ -83,7 +83,7 @@ describe('notifyService', () => {
 					.returns('ENGLISH_SMS_TEMPLATE_KEY');
 				sendSmsStub
 					.withArgs('ENGLISH_SMS_TEMPLATE_KEY', '12345', personalisation)
-					.resolves('notify client success');
+					.resolves({ body: { id: 'gov-notify-message-id' } });
 			});
 			it('should call the notify client correctly then respond', async () => {
 				const response = await NotifyService.sms('12345', smsPayloadForLanguage('en'));
@@ -102,7 +102,7 @@ describe('notifyService', () => {
 
 				sendSmsStub
 					.withArgs('FRENCH_SMS_TEMPLATE_KEY', '12345', personalisation)
-					.resolves('notify client success');
+					.resolves({ body: { id: 'gov-notify-message-id' } });
 			});
 			it('should call the notify client correctly then respond', async () => {
 				const response = await NotifyService.sms('12345', smsPayloadForLanguage('fr'));

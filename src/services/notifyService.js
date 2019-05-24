@@ -27,7 +27,7 @@ export default class Notify {
 			return Notify.SuccessfulResponse();
 		} catch (error) {
 			logError('SendSmsError', {
-				notifyApiError: Notify.formatErrorObject(error)
+				notifyApiError: Notify.formatErrorObject(error),
 			});
 			return Notify.ErrorResponse(error);
 		}
@@ -55,7 +55,7 @@ export default class Notify {
 			return Notify.SuccessfulResponse();
 		} catch (error) {
 			logError('SendEmailError', {
-				notifyApiError: Notify.formatErrorObject(error)
+				notifyApiError: Notify.formatErrorObject(error),
 			});
 			return Notify.ErrorResponse(error);
 		}
@@ -75,6 +75,7 @@ export default class Notify {
 	}
 
 	static formatErrorObject(errorResponse) {
+		console.error(errorResponse);
 		return {
 			statusCode: errorResponse.error.status_code,
 			errors: errorResponse.error.errors,

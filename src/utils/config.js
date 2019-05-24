@@ -1,5 +1,5 @@
 import { SecretsManager } from 'aws-sdk';
-import { logInfo } from './logger';
+import { logInfo, logError } from './logger';
 
 const configMetadata = {
 	notifyApiKey: 'NOTIFY_API_KEY',
