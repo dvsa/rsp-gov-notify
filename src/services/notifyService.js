@@ -2,6 +2,7 @@ import { NotifyClient } from 'notifications-node-client';
 import config from '../utils/config';
 import CreateResponse from '../utils/createResponse';
 import TemplateKeySelector from '../utils/TemplateKeySelector';
+import { logInfo, logError } from '../utils/logger';
 
 export default class Notify {
 
@@ -20,9 +21,14 @@ export default class Notify {
 					personalisation: Notify.formatPersonalisationObject(templateObj),
 				},
 			);
-			console.log(response);
+			logInfo('SendSmsSuccess', {
+				notifyMessageId: response.body.id,
+			});
 			return Notify.SuccessfulResponse();
 		} catch (error) {
+			logError('SendSmsError', {
+				notifyApiError: Notify.formatErrorObject(error),
+			});
 			return Notify.ErrorResponse(error);
 		}
 	}
@@ -42,10 +48,15 @@ export default class Notify {
 					personalisation: Notify.formatPersonalisationObject(templateObj),
 				},
 			);
-			console.log(response);
+
+			logInfo('SendEmailSuccess', {
+				notifyMessageId: response.body.id,
+			});
 			return Notify.SuccessfulResponse();
 		} catch (error) {
-			console.log(error);
+			logError('SendEmailError', {
+				notifyApiError: Notify.formatErrorObject(error),
+			});
 			return Notify.ErrorResponse(error);
 		}
 	}
@@ -64,6 +75,7 @@ export default class Notify {
 	}
 
 	static formatErrorObject(errorResponse) {
+		console.error(errorResponse);
 		return {
 			statusCode: errorResponse.error.status_code,
 			errors: errorResponse.error.errors,
