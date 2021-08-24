@@ -33,11 +33,28 @@ describe('TemplateKeySelector', () => {
 		sinon.stub(config, 'templateKeyEmailTurkish').returns('TURKISH_EMAIL_KEY');
 		sinon.stub(config, 'templateKeyEmailWelsh').returns('WELSH_EMAIL_KEY');
 
+		sinon.stub(config, 'templateKeySmsBulgarian').returns('BULGARIAN_SMS_KEY');
+		sinon.stub(config, 'templateKeySmsCroatian').returns('CROATIAN_SMS_KEY');
+		sinon.stub(config, 'templateKeySmsCzech').returns('CZECH_SMS_KEY');
+		sinon.stub(config, 'templateKeySmsDutch').returns('DUTCH_SMS_KEY');
 		sinon.stub(config, 'templateKeySmsEnglish').returns('ENGLISH_SMS_KEY');
+		sinon.stub(config, 'templateKeySmsEstonian').returns('ESTONIAN_SMS_KEY');
 		sinon.stub(config, 'templateKeySmsFrench').returns('FRENCH_SMS_KEY');
 		sinon.stub(config, 'templateKeySmsGerman').returns('GERMAN_SMS_KEY');
+		sinon.stub(config, 'templateKeySmsGreek').returns('GREEK_SMS_KEY');
+		sinon.stub(config, 'templateKeySmsHungarian').returns('HUNGARIAN_SMS_KEY');
+		sinon.stub(config, 'templateKeySmsItalian').returns('ITALIAN_SMS_KEY');
+		sinon.stub(config, 'templateKeySmsLatvian').returns('LATVIAN_SMS_KEY');
+		sinon.stub(config, 'templateKeySmsLithuanian').returns('LITHUANIAN_SMS_KEY');
 		sinon.stub(config, 'templateKeySmsPolish').returns('POLISH_SMS_KEY');
+		sinon.stub(config, 'templateKeySmsPortuguese').returns('PORTUGUESE_SMS_KEY');
+		sinon.stub(config, 'templateKeySmsRomanian').returns('ROMANIAN_SMS_KEY');
+		sinon.stub(config, 'templateKeySmsRussian').returns('RUSSIAN_SMS_KEY');
+		sinon.stub(config, 'templateKeySmsSerbian').returns('SERBIAN_SMS_KEY');
+		sinon.stub(config, 'templateKeySmsSlovakian').returns('SLOVAKIAN_SMS_KEY');
+		sinon.stub(config, 'templateKeySmsSlovenian').returns('SLOVENIAN_SMS_KEY');
 		sinon.stub(config, 'templateKeySmsSpanish').returns('SPANISH_SMS_KEY');
+		sinon.stub(config, 'templateKeySmsTurkish').returns('TURKISH_SMS_KEY');
 		sinon.stub(config, 'templateKeySmsWelsh').returns('WELSH_SMS_KEY');
 
 		templateKeySelector = new TemplateKeySelector();
@@ -68,11 +85,28 @@ describe('TemplateKeySelector', () => {
 		config.templateKeyEmailTurkish.restore();
 		config.templateKeyEmailWelsh.restore();
 
+		config.templateKeySmsBulgarian.restore();
+		config.templateKeySmsCroatian.restore();
+		config.templateKeySmsCzech.restore();
+		config.templateKeySmsDutch.restore();
 		config.templateKeySmsEnglish.restore();
+		config.templateKeySmsEstonian.restore();
 		config.templateKeySmsFrench.restore();
 		config.templateKeySmsGerman.restore();
+		config.templateKeySmsGreek.restore();
+		config.templateKeySmsHungarian.restore();
+		config.templateKeySmsItalian.restore();
+		config.templateKeySmsLatvian.restore();
+		config.templateKeySmsLithuanian.restore();
 		config.templateKeySmsPolish.restore();
+		config.templateKeySmsPortuguese.restore();
+		config.templateKeySmsRomanian.restore();
+		config.templateKeySmsRussian.restore();
+		config.templateKeySmsSerbian.restore();
+		config.templateKeySmsSlovakian.restore();
+		config.templateKeySmsSlovenian.restore();
 		config.templateKeySmsSpanish.restore();
+		config.templateKeySmsTurkish.restore();
 		config.templateKeySmsWelsh.restore();
 	});
 
@@ -106,11 +140,28 @@ describe('TemplateKeySelector', () => {
 
 	context('keyForSms', () => {
 		it('should return the sms envvars for the provided language', () => {
+			expect(templateKeySelector.keyForSms('bg')).toEqual('BULGARIAN_SMS_KEY');
+			expect(templateKeySelector.keyForSms('hr')).toEqual('CROATIAN_SMS_KEY');
+			expect(templateKeySelector.keyForSms('cs')).toEqual('CZECH_SMS_KEY');
+			expect(templateKeySelector.keyForSms('nl')).toEqual('DUTCH_SMS_KEY');
 			expect(templateKeySelector.keyForSms('en')).toEqual('ENGLISH_SMS_KEY');
+			expect(templateKeySelector.keyForSms('et')).toEqual('ESTONIAN_SMS_KEY');
 			expect(templateKeySelector.keyForSms('fr')).toEqual('FRENCH_SMS_KEY');
 			expect(templateKeySelector.keyForSms('de')).toEqual('GERMAN_SMS_KEY');
+			expect(templateKeySelector.keyForSms('el')).toEqual('GREEK_SMS_KEY');
+			expect(templateKeySelector.keyForSms('hu')).toEqual('HUNGARIAN_SMS_KEY');
+			expect(templateKeySelector.keyForSms('it')).toEqual('ITALIAN_SMS_KEY');
+			expect(templateKeySelector.keyForSms('lv')).toEqual('LATVIAN_SMS_KEY');
+			expect(templateKeySelector.keyForSms('lt')).toEqual('LITHUANIAN_SMS_KEY');
 			expect(templateKeySelector.keyForSms('pl')).toEqual('POLISH_SMS_KEY');
+			expect(templateKeySelector.keyForSms('pt')).toEqual('PORTUGUESE_SMS_KEY');
+			expect(templateKeySelector.keyForSms('ro')).toEqual('ROMANIAN_SMS_KEY');
+			expect(templateKeySelector.keyForSms('ru')).toEqual('RUSSIAN_SMS_KEY');
+			expect(templateKeySelector.keyForSms('sr')).toEqual('SERBIAN_SMS_KEY');
+			expect(templateKeySelector.keyForSms('sk')).toEqual('SLOVAKIAN_SMS_KEY');
+			expect(templateKeySelector.keyForSms('sl')).toEqual('SLOVENIAN_SMS_KEY');
 			expect(templateKeySelector.keyForSms('es')).toEqual('SPANISH_SMS_KEY');
+			expect(templateKeySelector.keyForSms('tk')).toEqual('TURKISH_SMS_KEY');
 			expect(templateKeySelector.keyForSms('cy')).toEqual('WELSH_SMS_KEY');
 		});
 	});
