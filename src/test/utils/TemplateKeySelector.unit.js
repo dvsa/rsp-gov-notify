@@ -27,7 +27,7 @@ describe('TemplateKeySelector', () => {
 		sinon.stub(config, 'templateKeyEmailRomanian').returns('ROMANIAN_EMAIL_KEY');
 		sinon.stub(config, 'templateKeyEmailRussian').returns('RUSSIAN_EMAIL_KEY');
 		sinon.stub(config, 'templateKeyEmailSerbian').returns('SERBIAN_EMAIL_KEY');
-		sinon.stub(config, 'templateKeyEmailSlovakian').returns('SLOVAKIAN_EMAIL_KEY');
+		sinon.stub(config, 'templateKeyEmailSlovak').returns('SLOVAK_EMAIL_KEY');
 		sinon.stub(config, 'templateKeyEmailSlovenian').returns('SLOVENIAN_EMAIL_KEY');
 		sinon.stub(config, 'templateKeyEmailSpanish').returns('SPANISH_EMAIL_KEY');
 		sinon.stub(config, 'templateKeyEmailTurkish').returns('TURKISH_EMAIL_KEY');
@@ -51,7 +51,7 @@ describe('TemplateKeySelector', () => {
 		sinon.stub(config, 'templateKeySmsRomanian').returns('ROMANIAN_SMS_KEY');
 		sinon.stub(config, 'templateKeySmsRussian').returns('RUSSIAN_SMS_KEY');
 		sinon.stub(config, 'templateKeySmsSerbian').returns('SERBIAN_SMS_KEY');
-		sinon.stub(config, 'templateKeySmsSlovakian').returns('SLOVAKIAN_SMS_KEY');
+		sinon.stub(config, 'templateKeySmsSlovak').returns('SLOVAK_SMS_KEY');
 		sinon.stub(config, 'templateKeySmsSlovenian').returns('SLOVENIAN_SMS_KEY');
 		sinon.stub(config, 'templateKeySmsSpanish').returns('SPANISH_SMS_KEY');
 		sinon.stub(config, 'templateKeySmsTurkish').returns('TURKISH_SMS_KEY');
@@ -79,7 +79,7 @@ describe('TemplateKeySelector', () => {
 		config.templateKeyEmailRomanian.restore();
 		config.templateKeyEmailRussian.restore();
 		config.templateKeyEmailSerbian.restore();
-		config.templateKeyEmailSlovakian.restore();
+		config.templateKeyEmailSlovak.restore();
 		config.templateKeyEmailSlovenian.restore();
 		config.templateKeyEmailSpanish.restore();
 		config.templateKeyEmailTurkish.restore();
@@ -103,7 +103,7 @@ describe('TemplateKeySelector', () => {
 		config.templateKeySmsRomanian.restore();
 		config.templateKeySmsRussian.restore();
 		config.templateKeySmsSerbian.restore();
-		config.templateKeySmsSlovakian.restore();
+		config.templateKeySmsSlovak.restore();
 		config.templateKeySmsSlovenian.restore();
 		config.templateKeySmsSpanish.restore();
 		config.templateKeySmsTurkish.restore();
@@ -130,7 +130,7 @@ describe('TemplateKeySelector', () => {
 			expect(templateKeySelector.keyForEmail('ro')).toEqual('ROMANIAN_EMAIL_KEY');
 			expect(templateKeySelector.keyForEmail('ru')).toEqual('RUSSIAN_EMAIL_KEY');
 			expect(templateKeySelector.keyForEmail('sr')).toEqual('SERBIAN_EMAIL_KEY');
-			expect(templateKeySelector.keyForEmail('sk')).toEqual('SLOVAKIAN_EMAIL_KEY');
+			expect(templateKeySelector.keyForEmail('sk')).toEqual('SLOVAK_EMAIL_KEY');
 			expect(templateKeySelector.keyForEmail('sl')).toEqual('SLOVENIAN_EMAIL_KEY');
 			expect(templateKeySelector.keyForEmail('es')).toEqual('SPANISH_EMAIL_KEY');
 			expect(templateKeySelector.keyForEmail('tk')).toEqual('TURKISH_EMAIL_KEY');
@@ -158,7 +158,7 @@ describe('TemplateKeySelector', () => {
 			expect(templateKeySelector.keyForSms('ro')).toEqual('ROMANIAN_SMS_KEY');
 			expect(templateKeySelector.keyForSms('ru')).toEqual('RUSSIAN_SMS_KEY');
 			expect(templateKeySelector.keyForSms('sr')).toEqual('SERBIAN_SMS_KEY');
-			expect(templateKeySelector.keyForSms('sk')).toEqual('SLOVAKIAN_SMS_KEY');
+			expect(templateKeySelector.keyForSms('sk')).toEqual('SLOVAK_SMS_KEY');
 			expect(templateKeySelector.keyForSms('sl')).toEqual('SLOVENIAN_SMS_KEY');
 			expect(templateKeySelector.keyForSms('es')).toEqual('SPANISH_SMS_KEY');
 			expect(templateKeySelector.keyForSms('tk')).toEqual('TURKISH_SMS_KEY');
