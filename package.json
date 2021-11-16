@@ -57,7 +57,7 @@
     "wait-on": "^2.0.2"
   },
   "dependencies": {
-    "aws-sdk": "^2.140.0",
+    "aws-sdk": "^2.814.0",
     "babel-polyfill": "^6.26.0",
     "event-stream": "^3.3.4",
     "notifications-node-client": "^4.6.0",
