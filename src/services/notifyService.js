@@ -75,6 +75,7 @@ export default class Notify {
 	}
 
 	static formatErrorObject(errorResponse) {
+		// eslint-disable-next-line no-console
 		console.error(errorResponse);
 		return {
 			statusCode: errorResponse.error.status_code,

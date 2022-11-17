@@ -1,7 +1,9 @@
 import Notify from '../services/notifyService';
 
-export default (event) => {
+export const handler = (event) => {
 	const notifyObject = JSON.parse(event.body);
 
 	return Notify.sms(notifyObject.PhoneNumber, notifyObject);
 };
+
+export default handler;
