@@ -13,6 +13,14 @@ export function logInfo(logName, message) {
 	}, null, 2));
 }
 
+export function logDebug(logName, message) {
+	console.log(JSON.stringify({
+		logName,
+		message,
+		logLevel: 'DEBUG',
+	}, null, 2));
+}
+
 export function logError(logName, message) {
 	console.error(JSON.stringify({
 		logName,

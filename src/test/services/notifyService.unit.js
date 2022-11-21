@@ -24,6 +24,7 @@ describe('notifyService', () => {
 		};
 
 		beforeEach(() => {
+			sinon.stub(console, 'log');
 			personalisation = personalisationWithLink('https://portal.local/47bmo7p9syg');
 			sendEmailStub = sinon.stub(NotifyClient.prototype, 'sendEmail');
 			templateKeySelectorStub = sinon.stub(TemplateKeySelector.prototype, 'keyForEmail');
