@@ -2,6 +2,7 @@ const fs = require('fs-extra');
 const { merge } = require('webpack-merge');
 const archiver = require('archiver');
 const common = require('./webpack.config');
+const lambdaNames = require('./lambdas.json');
 
 const OUTPUT_FOLDER = './dist';
 
@@ -53,13 +54,8 @@ class BundlePlugin {
 	}
 }
 
-const lambdas = [
-	'notifyEmail',
-	'notifySms',
-];
-
 function getArchives() {
-	return lambdas.map((lambdaName) => ({
+	return lambdaNames.lambdas.map((lambdaName) => ({
 		inputPath: `.aws-sam/build/${lambdaName}`,
 		outputPath: `${OUTPUT_FOLDER}`,
 		outputName: `${lambdaName}`,
