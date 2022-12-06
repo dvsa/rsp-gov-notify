@@ -22,7 +22,7 @@ export default class Notify {
 				},
 			);
 			logInfo('SendSmsSuccess', {
-				notifyMessageId: response.body.id,
+				notifyMessageId: response.data ? response.data.id : 'no id found',
 			});
 			return Notify.SuccessfulResponse();
 		} catch (error) {
@@ -50,7 +50,7 @@ export default class Notify {
 			);
 
 			logInfo('SendEmailSuccess', {
-				notifyMessageId: response.body.id,
+				notifyMessageId: response.data ? response.data.id : 'no id found',
 			});
 			return Notify.SuccessfulResponse();
 		} catch (error) {
@@ -75,11 +75,17 @@ export default class Notify {
 	}
 
 	static formatErrorObject(errorResponse) {
-		// eslint-disable-next-line no-console
-		console.error(errorResponse);
+		if (errorResponse.response && errorResponse.response.data) {
+			return {
+				statusCode: errorResponse.response.data.status_code,
+				errors: errorResponse.response.data.errors,
+			};
+		}
 		return {
-			statusCode: errorResponse.error.status_code,
-			errors: errorResponse.error.errors,
+			errors: [{
+				error: 'RSPError',
+				message: `An unexpected error occurred. ${errorResponse.message ? errorResponse.message : ''}`,
+			}],
 		};
 	}
 
