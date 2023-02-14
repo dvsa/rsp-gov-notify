@@ -2,11 +2,12 @@ import { NotifyClient } from 'notifications-node-client';
 import config from '../utils/config';
 import CreateResponse from '../utils/createResponse';
 import TemplateKeySelector from '../utils/TemplateKeySelector';
-import { logInfo, logError } from '../utils/logger';
+import { logInfo, logError, logDebug } from '../utils/logger';
 
 export default class Notify {
 
 	static async sms(phoneNumber, templateObj) {
+		logDebug('sendSms', { number: phoneNumber });
 		const notifyApiKey = config.notifyApiKey();
 		const notifyClient = new NotifyClient(notifyApiKey);
 
@@ -23,6 +24,7 @@ export default class Notify {
 			);
 			logInfo('SendSmsSuccess', {
 				notifyMessageId: response.data ? response.data.id : 'no id found',
+				data: response.data,
 			});
 			return Notify.SuccessfulResponse();
 		} catch (error) {
@@ -34,6 +36,7 @@ export default class Notify {
 	}
 
 	static async email(emailAddress, templateObj) {
+		logDebug('sendEmail', { emailAddress });
 		const notifyApiKey = config.notifyApiKey();
 		const notifyClient = new NotifyClient(notifyApiKey);
 
@@ -51,6 +54,7 @@ export default class Notify {
 
 			logInfo('SendEmailSuccess', {
 				notifyMessageId: response.data ? response.data.id : 'no id found',
+				data: response.data,
 			});
 			return Notify.SuccessfulResponse();
 		} catch (error) {
