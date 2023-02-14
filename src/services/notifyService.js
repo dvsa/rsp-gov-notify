@@ -35,6 +35,26 @@ export default class Notify {
 		}
 	}
 
+	static async smsStatus(notifyId) {
+		logDebug('smsStatus', { notifyId });
+		const notifyApiKey = config.notifyApiKey();
+		const notifyClient = new NotifyClient(notifyApiKey);
+
+		try {
+			const response = await notifyClient.getNotificationById(notifyId);
+			logInfo('smsStatusSuccess', {
+				notifyMessageId: response.data ? response.data.id : 'no id found',
+				data: response.data,
+			});
+			return Notify.SuccessfulResponse();
+		} catch (error) {
+			logError('SmsStatusError', {
+				notifyApiError: Notify.formatErrorObject(error),
+			});
+			return Notify.ErrorResponse(error);
+		}
+	}
+
 	static async email(emailAddress, templateObj) {
 		logDebug('sendEmail', { emailAddress });
 		const notifyApiKey = config.notifyApiKey();

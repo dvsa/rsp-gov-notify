@@ -18,6 +18,10 @@ export const handler = async (event) => {
 
 	const notifyObject = JSON.parse(event.body);
 
+	if (notifyObject.status) {
+		return Notify.smsStatus(notifyObject.NotifyId, notifyObject);
+	}
+
 	return Notify.sms(notifyObject.PhoneNumber, notifyObject);
 };
 
