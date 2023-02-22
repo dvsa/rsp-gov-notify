@@ -1,0 +1,15 @@
+# Changelog
+
+## [3.0.1](https://github.com/dvsa/rsp-gov-notify/compare/v1.17.0...v3.0.1) (2023-02-22)
+
+
+### Bug Fixes
+
+* package.json & package-lock.json to reduce vulnerabilities ([82a5951](https://github.com/dvsa/rsp-gov-notify/commit/82a5951eb36c2af928f6fa704a6c8a087ab4865f))
+* The S3 bucket path for the release webhook.  ([#56](https://github.com/dvsa/rsp-gov-notify/issues/56)) ([da7ad87](https://github.com/dvsa/rsp-gov-notify/commit/da7ad872cfb5e7f2c98d6853fb4375936ef9b8a6))
+
+
+### Miscellaneous Chores
+
+* release 3.0.0 ([#53](https://github.com/dvsa/rsp-gov-notify/issues/53)) ([9ebb832](https://github.com/dvsa/rsp-gov-notify/commit/9ebb8327c09eece8b8a51b52867299f576001c0b))
+* release 3.0.1 ([#54](https://github.com/dvsa/rsp-gov-notify/issues/54)) ([c8f734f](https://github.com/dvsa/rsp-gov-notify/commit/c8f734f0a3b2c3dcb6950424f3024eb963a756e9))

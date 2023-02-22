@@ -1,6 +1,6 @@
 {
   "name": "rsp-gov-notify",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Service to send notifications to users of the RSP project using Gov.Notify.",
   "repository": "https://github.com/dvsa/rsp-gov-notify",
   "author": "",
