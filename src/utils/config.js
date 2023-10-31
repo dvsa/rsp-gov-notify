@@ -26,6 +26,7 @@ const configMetadata = {
 	templateKeyEmailSlovenian: 'TEMPLATE_KEY_EMAIL_SLOVENIAN',
 	templateKeyEmailSpanish: 'TEMPLATE_KEY_EMAIL_SPANISH',
 	templateKeyEmailTurkish: 'TEMPLATE_KEY_EMAIL_TURKISH',
+	templateKeyEmailUkraine: 'TEMPLATE_KEY_EMAIL_UKRAINE',
 	templateKeyEmailWelsh: 'TEMPLATE_KEY_EMAIL_WELSH',
 	templateKeySmsBulgarian: 'TEMPLATE_KEY_SMS_BULGARIAN',
 	templateKeySmsCroatian: 'TEMPLATE_KEY_SMS_CROATIAN',
@@ -49,6 +50,7 @@ const configMetadata = {
 	templateKeySmsSlovenian: 'TEMPLATE_KEY_SMS_SLOVENIAN',
 	templateKeySmsSpanish: 'TEMPLATE_KEY_SMS_SPANISH',
 	templateKeySmsTurkish: 'TEMPLATE_KEY_SMS_TURKISH',
+	templateKeySmsUkraine: 'TEMPLATE_KEY_SMS_UKRAINE',
 	templateKeySmsWelsh: 'TEMPLATE_KEY_SMS_WELSH',
 };
 
