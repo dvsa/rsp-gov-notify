@@ -27,6 +27,7 @@ export default class TemplateKeySelector {
 			sl: config.templateKeyEmailSlovenian(),
 			sr: config.templateKeyEmailSerbian(),
 			tk: config.templateKeyEmailTurkish(),
+			ua: config.templateKeyEmailUkraine(),
 		};
 		this.smsKeys = {
 			bg: config.templateKeySmsBulgarian(),
@@ -52,6 +53,7 @@ export default class TemplateKeySelector {
 			sl: config.templateKeySmsSlovenian(),
 			sr: config.templateKeySmsSerbian(),
 			tk: config.templateKeySmsTurkish(),
+			ua: config.templateKeySmsUkraine(),
 		};
 	}
 
