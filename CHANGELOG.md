@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.0](https://github.com/dvsa/rsp-gov-notify/compare/v3.0.1...v3.1.0) (2023-12-06)
+
+
+### Features
+
+* add Ukrainian translation to public portal 1st page ([#61](https://github.com/dvsa/rsp-gov-notify/issues/61)) ([5636f19](https://github.com/dvsa/rsp-gov-notify/commit/5636f1940c87f08d3b0c8e1f908f6054fa612b8a))
+
 ## [3.0.1](https://github.com/dvsa/rsp-gov-notify/compare/v1.17.0...v3.0.1) (2023-02-22)
 
 
