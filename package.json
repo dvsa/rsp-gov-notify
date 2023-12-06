@@ -60,7 +60,7 @@
     "aws-sdk": "^2.1354.0",
     "babel-polyfill": "^6.26.0",
     "event-stream": "^4.0.1",
-    "notifications-node-client": "^6.0.0",
+    "notifications-node-client": "^7.0.4",
     "uuid": "^9.0.0"
   }
 }
