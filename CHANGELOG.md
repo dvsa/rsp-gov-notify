@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.0.0](https://github.com/dvsa/rsp-gov-notify/compare/v3.1.0...v4.0.0) (2024-08-16)
+
+
+### Miscellaneous Chores
+
+* release 4.0.0 ([f928a8c](https://github.com/dvsa/rsp-gov-notify/commit/f928a8ce97c7eda5ac4f5f686c03bb03abfef8ef))
+
 ## [3.1.0](https://github.com/dvsa/rsp-gov-notify/compare/v3.0.1...v3.1.0) (2023-12-06)
 
 
