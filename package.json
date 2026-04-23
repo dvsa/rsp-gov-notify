@@ -60,6 +60,6 @@
     "babel-polyfill": "^6.26.0",
     "event-stream": "^4.0.1",
     "notifications-node-client": "^7.0.4",
-    "uuid": "^9.0.0"
+    "uuid": "^14.0.0"
   }
 }
