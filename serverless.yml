@@ -6,37 +6,39 @@ custom:
       - name: NotifyEmailRequest
         description: This is an Email notification request
         contentType: application/json
-        schema: ${file(models/NotifyEmailRequest.json)}
+        schema: ${file(src/models/NotifyEmailRequest.json)}
       - name: NotifySmsRequest
         description: This is an SMS notification request
         contentType: application/json
-        schema: ${file(models/NotifySmsRequest.json)}
+        schema: ${file(src/models/NotifySmsRequest.json)}
       - name: NotifyResponse
         description: This is a notify response
         contentType: application/json
-        schema: ${file(models/NotifyResponse.json)}
+        schema: ${file(src/models/NotifyResponse.json)}
       - name: ErrorResponse
         description: This is an error
         contentType: application/json
-        schema: ${file(models/ErrorResponse.json)}
+        schema: ${file(src/models/ErrorResponse.json)}
     version: '1'
     title: 'RSP Gov.Notify API'
     description: 'This is an API to send notifications to users via the Gov.Notify service for the RSP project'
 
 plugins:
   - serverless-offline
-  - serverless-openapi-documentation
+  - serverless-dotenv-plugin
+  - serverless-openapi-documenter
+
 provider:
   name: aws
-  runtime: nodejs20.x
+  runtime: nodejs24.x
   region: eu-west-1
+
 functions:
   notifyEmail:
-    handler: notifyEmail/app.handler
+    handler: .webpack/notifyEmail/app.handler
     memorySize: 128
     events:
-      -
-        http:
+      - http:
           path: notifyEmail
           method: post
           authorizer: aws_iam
@@ -45,7 +47,8 @@ functions:
             summary: "Send Email notification"
             description: "Send Email notification"
             requestBody:
-              description: "None"
+              description: "Email notification request payload"
+              required: true
             requestModels:
               application/json: "NotifyEmailRequest"
             methodResponses:
@@ -65,11 +68,10 @@ functions:
                 responseModels:
                   application/json: "ErrorResponse"
   notifySms:
-    handler: notifySms/app.handler
+    handler: .webpack/notifySms/app.handler
     memorySize: 128
     events:
-      -
-        http:
+      - http:
           path: notifySms
           method: post
           authorizer: aws_iam
@@ -78,7 +80,8 @@ functions:
             summary: "Send SMS notification"
             description: "Send SMS notification"
             requestBody:
-              description: "None"
+              description: "SMS notification request payload"
+              required: true
             requestModels:
               application/json: "NotifySmsRequest"
             methodResponses:

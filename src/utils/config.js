@@ -1,4 +1,4 @@
-import { SecretsManager } from 'aws-sdk';
+import { GetSecretValueCommand, SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
 import { logInfo, logError } from './logger';
 
 const configMetadata = {
@@ -56,27 +56,24 @@ const configMetadata = {
 
 let configuration = {};
 async function bootstrap() {
-	return new Promise((resolve, reject) => {
-		if (process.env.USE_SECRETS_MANAGER === 'true') {
-			const SecretId = process.env.SECRETS_MANAGER_SECRET_NAME;
-			logInfo('NotifySecretsManagerSecretId', { secretId: SecretId });
-			const secretsManagerClient = new SecretsManager({ region: process.env.REGION });
-			secretsManagerClient.getSecretValue({ SecretId }, (err, secretsManagerResponse) => {
-				if (err) {
-					logError('NotifySecretsManagerError', err.message);
-					reject(err);
-					return;
-				}
-				configuration = JSON.parse(secretsManagerResponse.SecretString);
-				resolve(configuration);
-			});
-		} else {
-			logInfo('NotifyServiceEnvVars', 'Using envvars for config');
-			configuration = Object.values(configMetadata)
-				.reduce((config, envkey) => ({ [envkey]: process.env[envkey], ...config }), configuration);
-			resolve(configuration);
+	if (process.env.USE_SECRETS_MANAGER === 'true') {
+		const SecretId = process.env.SECRETS_MANAGER_SECRET_NAME;
+		logInfo('NotifySecretsManagerSecretId', { secretId: SecretId });
+		const secretsManagerClient = new SecretsManagerClient({ region: process.env.REGION });
+		try {
+			const response = await secretsManagerClient.send(new GetSecretValueCommand({ SecretId }));
+			configuration = JSON.parse(response.SecretString);
+		} catch (error) {
+			logError('NotifySecretsManagerError', error.message);
+			throw error;
 		}
-	});
+		return configuration;
+	}
+
+	logInfo('NotifyServiceEnvVars', 'Using envvars for config');
+	configuration = Object.values(configMetadata)
+		.reduce((config, envkey) => ({ [envkey]: process.env[envkey], ...config }), configuration);
+	return configuration;
 }
 
 const fromConfiguration = (configKey) => () => {

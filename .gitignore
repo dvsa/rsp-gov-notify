@@ -15,4 +15,6 @@ npm-debug.log
 *.tar
 *.zip
 dist
+.webpack
+.env
 .idea

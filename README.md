@@ -1,41 +1,44 @@
 # RSP Gov.Notify Serverless API
-#### The below environment variables should be acquired and set locally for the API to run correctly:
-NOTIFY_API_KEY - Api key taken from Gov.Notify service
-SMS_TEMPLATE_KEY - Template key for SMS message from Gov.Notify Service
-EMAIL_TEMPLATE_KEY - Template key for Email message from Gov.Notify Service
-PAYMENT_PORTAL_URL - URL to be included in notification message.
 
-#### Pre-requisites
-Although Serverless Framework is being used solely for local development purposes, you still need a `[default]` AWS profile in `~/.aws/credentials` in order for for you to run the app locally.
+This service sends email and SMS notifications through Gov.Notify.
 
-#### Description
-This API orchestrates sending notification messages via the Gov.Notify service.
+## Requirements
 
-## Run Locally
-- `nvm use`
-- `npm i`
-- `npm run start`
+- Node.js 24 and npm 11 (`nvm use` reads `.nvmrc`)
+- Gov.Notify API key, notification template keys, and payment portal URL
+- AWS credentials from the standard SDK credential chain only when loading configuration from Secrets Manager
 
-## Package for development
-- `npm run build`
+## Run locally
 
-## Package for production
-- `npm run build:prod`
+Create a local `.env` file with the service configuration. The file is ignored by git.
 
-## To run unit tests
+```dotenv
+NOTIFY_API_KEY=
+PAYMENT_PORTAL_URL=
+USE_SECRETS_MANAGER=false
+```
 
-- `npm run test`
+Set `TEMPLATE_KEY_EMAIL_<LANGUAGE>` and `TEMPLATE_KEY_SMS_<LANGUAGE>` for each configured language. The complete key list is in `src/utils/config.js`.
 
-## To Lint
+When `USE_SECRETS_MANAGER=true`, also set `SECRETS_MANAGER_SECRET_NAME` and `REGION`. The AWS SDK uses its normal credential provider chain; set `AWS_PROFILE` in `.env` if needed. For an SSO profile, authenticate before startup with `aws sso login --profile <profile>`. Do not place AWS credentials in `.env`.
 
-- `npm run lint`
+```bash
+nvm use
+npm ci
+npm start
+```
 
-## To auto fix linting errors
+The local server uses Serverless Offline without request authentication. Its routes are `POST http://localhost:3000/dev/notifyEmail` and `POST http://localhost:3000/dev/notifySms`. Requests send real messages through Gov.Notify, so use appropriate non-production credentials and data.
 
-- `npm run lint:fix`
+## Checks and artifacts
 
-## To Note
+```bash
+npm test
+npm run lint
+npm run build-openapi
+npm run build:prod
+```
 
-SAM is a new addition and is being used for building for running locally and for packaging for production - using the `template.yaml` file.
+`npm run build` writes one bundle per Lambda to `.webpack/`. `npm run build:prod` creates one deployment archive per entry in `lambdas.json` under `dist/`. `npm run build-openapi` generates `build/openapi.yaml`.
 
-Serverless is being used for running locally from the built files. Ideally SAM will be used for packaging and running locally going forward and the serverless config can be removed.
+The repository currently has no black-box integration test files. The CI workflows upload artifacts from feature branches and update Lambda code from the default branch; changing a runtime declaration alone does not update live infrastructure.

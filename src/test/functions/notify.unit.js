@@ -29,16 +29,19 @@ describe('notifyFunction', () => {
 			await event.service({ body: JSON.stringify({ valid: 'json' }) });
 			expect(mockConfig.called).toBe(true);
 		});
+
 		it(`${event.name} should throw error if event body is missing`, async () => {
-			expect(async () => {
-				await event.service({});
-			}).rejects.toThrow();
+			await expect(event.service({})).rejects.toThrow('Unable to process request.');
 		});
+
 		it(`${event.name} should throw error if event body JSON is invalid`, async () => {
-			expect(async () => {
-				await event.service({ body: 'something' });
-			}).rejects.toThrow();
+			await expect(event.service({ body: 'something' })).rejects.toThrow();
 		});
+
+		it(`${event.name} should reject a JSON null body`, async () => {
+			await expect(event.service({ body: 'null' })).rejects.toThrow('Unable to process request.');
+		});
+
 		it(`${event.name} should return successfully with valid JSON`, async () => {
 			const result = await event.service({ body: JSON.stringify({ valid: 'json' }) });
 			expect(result).toBe(Notify.SuccessfulResponse);
