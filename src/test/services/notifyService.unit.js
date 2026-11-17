@@ -81,6 +81,16 @@ describe('notifyService', () => {
 			});
 		});
 
+		context('when the Notify response does not include message data', () => {
+			it('logs that no message id was found', async () => {
+				sendEmailStub.resolves({});
+
+				await NotifyService.email(emailAddr, payload);
+
+				sinon.assert.calledWith(logInfoStub, 'SendEmailSuccess', { notifyMessageId: 'no id found' });
+			});
+		});
+
 		context('when Gov.Notify returns an error', () => {
 			it('returns the error response and logs the Notify error', async () => {
 				const error = {
@@ -121,6 +131,22 @@ describe('notifyService', () => {
 						errors: [{
 							error: 'RSPError',
 							message: 'An unexpected error occurred. Notify unavailable',
+						}],
+					}),
+				});
+			});
+
+			it('handles errors without a message or Notify response data', async () => {
+				sendEmailStub.rejects({ response: {} });
+
+				const response = await NotifyService.email(emailAddr, payload);
+
+				expect(response).toMatchObject({
+					statusCode: 400,
+					body: JSON.stringify({
+						errors: [{
+							error: 'RSPError',
+							message: 'An unexpected error occurred. ',
 						}],
 					}),
 				});
@@ -172,6 +198,16 @@ describe('notifyService', () => {
 			it('should call the notify client and log the message id', async () => {
 				await NotifyService.sms('12345', smsPayloadForLanguage('en'));
 				sinon.assert.calledWith(logInfoStub, 'SendSmsSuccess', { notifyMessageId: 'gov-notify-message-id' });
+			});
+		});
+
+		context('when the Notify response does not include message data', () => {
+			it('logs that no message id was found', async () => {
+				sendSmsStub.resolves({});
+
+				await NotifyService.sms('12345', smsPayloadForLanguage('en'));
+
+				sinon.assert.calledWith(logInfoStub, 'SendSmsSuccess', { notifyMessageId: 'no id found' });
 			});
 		});
 

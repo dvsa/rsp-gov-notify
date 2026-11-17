@@ -14,6 +14,10 @@ describe('config', () => {
 			USE_SECRETS_MANAGER: process.env.USE_SECRETS_MANAGER,
 			SECRETS_MANAGER_SECRET_NAME: process.env.SECRETS_MANAGER_SECRET_NAME,
 			REGION: process.env.REGION,
+			NOTIFY_API_KEY: process.env.NOTIFY_API_KEY,
+			PAYMENT_PORTAL_URL: process.env.PAYMENT_PORTAL_URL,
+			TEMPLATE_KEY_EMAIL_ENGLISH: process.env.TEMPLATE_KEY_EMAIL_ENGLISH,
+			TEMPLATE_KEY_SMS_ENGLISH: process.env.TEMPLATE_KEY_SMS_ENGLISH,
 		};
 		process.env.USE_SECRETS_MANAGER = 'true';
 		process.env.SECRETS_MANAGER_SECRET_NAME = 'notify-config';
@@ -32,6 +36,27 @@ describe('config', () => {
 				process.env[key] = value;
 			}
 		});
+	});
+
+	it('loads configuration from environment variables when Secrets Manager is disabled', async () => {
+		process.env.USE_SECRETS_MANAGER = 'false';
+		process.env.NOTIFY_API_KEY = 'environment-key';
+		process.env.PAYMENT_PORTAL_URL = 'https://portal.example';
+		process.env.TEMPLATE_KEY_EMAIL_ENGLISH = 'email-template';
+		process.env.TEMPLATE_KEY_SMS_ENGLISH = 'sms-template';
+
+		const result = await config.bootstrap();
+
+		expect(result).toMatchObject({
+			NOTIFY_API_KEY: 'environment-key',
+			PAYMENT_PORTAL_URL: 'https://portal.example',
+			TEMPLATE_KEY_EMAIL_ENGLISH: 'email-template',
+			TEMPLATE_KEY_SMS_ENGLISH: 'sms-template',
+		});
+		expect(config.notifyApiKey()).toBe('environment-key');
+		expect(config.paymentPortalUrl()).toBe('https://portal.example');
+		expect(config.templateKeyEmailEnglish()).toBe('email-template');
+		expect(config.templateKeySmsEnglish()).toBe('sms-template');
 	});
 
 	it('loads configuration from Secrets Manager with a v3 command', async () => {

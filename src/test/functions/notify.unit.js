@@ -6,8 +6,18 @@ import Notify from '../../services/notifyService';
 import config from '../../utils/config';
 
 const functions = [
-	{ name: 'Email Function', service: notifyEmail },
-	{ name: 'SMS Function', service: notifySms },
+	{
+		name: 'Email Function',
+		service: notifyEmail,
+		notifyMethod: 'email',
+		recipientField: 'Email',
+	},
+	{
+		name: 'SMS Function',
+		service: notifySms,
+		notifyMethod: 'sms',
+		recipientField: 'PhoneNumber',
+	},
 ];
 
 describe('notifyFunction', () => {
@@ -43,8 +53,18 @@ describe('notifyFunction', () => {
 		});
 
 		it(`${event.name} should return successfully with valid JSON`, async () => {
-			const result = await event.service({ body: JSON.stringify({ valid: 'json' }) });
+			const notifyObject = {
+				[event.recipientField]: 'recipient',
+				otherField: 'other value',
+			};
+			const result = await event.service({ body: JSON.stringify(notifyObject) });
+
 			expect(result).toBe(Notify.SuccessfulResponse);
+			sinon.assert.calledWith(
+				Notify[event.notifyMethod],
+				notifyObject[event.recipientField],
+				notifyObject,
+			);
 		});
 	});
 });
