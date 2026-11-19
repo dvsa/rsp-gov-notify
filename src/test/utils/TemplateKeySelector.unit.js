@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import expect from 'expect';
 import sinon from 'sinon';
 import config from '../../utils/config';
@@ -31,6 +30,7 @@ describe('TemplateKeySelector', () => {
 		sinon.stub(config, 'templateKeyEmailSlovenian').returns('SLOVENIAN_EMAIL_KEY');
 		sinon.stub(config, 'templateKeyEmailSpanish').returns('SPANISH_EMAIL_KEY');
 		sinon.stub(config, 'templateKeyEmailTurkish').returns('TURKISH_EMAIL_KEY');
+		sinon.stub(config, 'templateKeyEmailUkraine').returns('UKRAINIAN_EMAIL_KEY');
 		sinon.stub(config, 'templateKeyEmailWelsh').returns('WELSH_EMAIL_KEY');
 
 		sinon.stub(config, 'templateKeySmsBulgarian').returns('BULGARIAN_SMS_KEY');
@@ -55,6 +55,7 @@ describe('TemplateKeySelector', () => {
 		sinon.stub(config, 'templateKeySmsSlovenian').returns('SLOVENIAN_SMS_KEY');
 		sinon.stub(config, 'templateKeySmsSpanish').returns('SPANISH_SMS_KEY');
 		sinon.stub(config, 'templateKeySmsTurkish').returns('TURKISH_SMS_KEY');
+		sinon.stub(config, 'templateKeySmsUkraine').returns('UKRAINIAN_SMS_KEY');
 		sinon.stub(config, 'templateKeySmsWelsh').returns('WELSH_SMS_KEY');
 
 		templateKeySelector = new TemplateKeySelector();
@@ -83,6 +84,7 @@ describe('TemplateKeySelector', () => {
 		config.templateKeyEmailSlovenian.restore();
 		config.templateKeyEmailSpanish.restore();
 		config.templateKeyEmailTurkish.restore();
+		config.templateKeyEmailUkraine.restore();
 		config.templateKeyEmailWelsh.restore();
 
 		config.templateKeySmsBulgarian.restore();
@@ -107,6 +109,7 @@ describe('TemplateKeySelector', () => {
 		config.templateKeySmsSlovenian.restore();
 		config.templateKeySmsSpanish.restore();
 		config.templateKeySmsTurkish.restore();
+		config.templateKeySmsUkraine.restore();
 		config.templateKeySmsWelsh.restore();
 	});
 
@@ -134,7 +137,9 @@ describe('TemplateKeySelector', () => {
 			expect(templateKeySelector.keyForEmail('sl')).toEqual('SLOVENIAN_EMAIL_KEY');
 			expect(templateKeySelector.keyForEmail('es')).toEqual('SPANISH_EMAIL_KEY');
 			expect(templateKeySelector.keyForEmail('tk')).toEqual('TURKISH_EMAIL_KEY');
+			expect(templateKeySelector.keyForEmail('ua')).toEqual('UKRAINIAN_EMAIL_KEY');
 			expect(templateKeySelector.keyForEmail('cy')).toEqual('WELSH_EMAIL_KEY');
+			expect(templateKeySelector.keyForEmail('unknown')).toBeUndefined();
 		});
 	});
 
@@ -162,7 +167,9 @@ describe('TemplateKeySelector', () => {
 			expect(templateKeySelector.keyForSms('sl')).toEqual('SLOVENIAN_SMS_KEY');
 			expect(templateKeySelector.keyForSms('es')).toEqual('SPANISH_SMS_KEY');
 			expect(templateKeySelector.keyForSms('tk')).toEqual('TURKISH_SMS_KEY');
+			expect(templateKeySelector.keyForSms('ua')).toEqual('UKRAINIAN_SMS_KEY');
 			expect(templateKeySelector.keyForSms('cy')).toEqual('WELSH_SMS_KEY');
+			expect(templateKeySelector.keyForSms('unknown')).toBeUndefined();
 		});
 	});
 });

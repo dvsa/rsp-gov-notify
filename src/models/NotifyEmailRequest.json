@@ -1,7 +1,7 @@
 {
 	"type": "object",
 	"required": [
-		"Email", "VehicleReg", "Location", "Amount", "Token"
+		"Email", "VehicleReg", "Location", "Language", "Amount", "Token"
 	],
 	"properties": {
 		"Email": {
@@ -11,6 +11,9 @@
 			"type": "string"
 		},
 		"Location": {
+			"type": "string"
+		},
+		"Language": {
 			"type": "string"
 		},
 		"Amount": {
@@ -24,6 +27,7 @@
 		"Email": "example@example.com",
 		"VehicleReg": "AB12CDE",
 		"Location": "United Kingdom",
+		"Language": "en",
 		"Amount": 100,
 		"Token": "0123456789abcdef"
 	}

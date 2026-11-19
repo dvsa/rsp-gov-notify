@@ -15,4 +15,9 @@ npm-debug.log
 *.tar
 *.zip
 dist
+.webpack
+.env
 .idea
+integration-reports
+serverless.integration.generated.yml
+.nyc_output
