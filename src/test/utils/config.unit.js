@@ -7,18 +7,9 @@ import config from '../../utils/config';
 describe('config', () => {
 	let sendStub;
 	let logErrorStub;
-	let originalEnv;
 
 	beforeEach(() => {
-		originalEnv = {
-			USE_SECRETS_MANAGER: process.env.USE_SECRETS_MANAGER,
-			SECRETS_MANAGER_SECRET_NAME: process.env.SECRETS_MANAGER_SECRET_NAME,
-			REGION: process.env.REGION,
-			NOTIFY_API_KEY: process.env.NOTIFY_API_KEY,
-			PAYMENT_PORTAL_URL: process.env.PAYMENT_PORTAL_URL,
-			TEMPLATE_KEY_EMAIL_ENGLISH: process.env.TEMPLATE_KEY_EMAIL_ENGLISH,
-			TEMPLATE_KEY_SMS_ENGLISH: process.env.TEMPLATE_KEY_SMS_ENGLISH,
-		};
+		sinon.stub(process, 'env').value({});
 		process.env.USE_SECRETS_MANAGER = 'true';
 		process.env.SECRETS_MANAGER_SECRET_NAME = 'notify-config';
 		process.env.REGION = 'eu-west-1';
@@ -29,13 +20,6 @@ describe('config', () => {
 
 	afterEach(() => {
 		sinon.restore();
-		Object.entries(originalEnv).forEach(([key, value]) => {
-			if (value === undefined) {
-				delete process.env[key];
-			} else {
-				process.env[key] = value;
-			}
-		});
 	});
 
 	it('loads configuration from environment variables when Secrets Manager is disabled', async () => {

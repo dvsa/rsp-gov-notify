@@ -16,7 +16,9 @@
     "check-security-log": "git log -p | scanrepo",
     "test": "./node_modules/.bin/mocha --require @babel/register src/**/*.unit.js",
     "test-watch": "nodemon --watch src --exec npm test",
-    "test-i": "./node_modules/.bin/mocha --require @babel/register src/test/**/*.serviceInt.js",
+    "test-i": "node integration/run.js",
+    "test-i:report": "node integration/open-report.js",
+    "test-i:tooling": "node --test integration/tooling-tests/tooling.test.js",
     "lint": "./node_modules/.bin/eslint src",
     "lint:fix": "./node_modules/.bin/eslint src --fix",
     "watch": "./node_modules/.bin/nodemon --watch src --exec npm run build",
@@ -54,6 +56,6 @@
     "notifications-node-client": "^8.5.0"
   },
   "overrides": {
-    "serverless": "npm:osls@^4.4.0"
+    "serverless": "npm:osls"
   }
 }
